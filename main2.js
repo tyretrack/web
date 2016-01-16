@@ -1,7 +1,6 @@
 jQuery(document).ready(function () {
 
-
-    var ws = new WebSocket("ws://192.168.0.13:8765/");
+    var ws = new WebSocket("ws://" + window.location.hostname + ":8765/");
 
     var data = {};
 
