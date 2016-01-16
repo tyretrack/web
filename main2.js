@@ -202,6 +202,8 @@ jQuery(document).ready(function () {
         draw(c.sParticipationInfo[0], 0);
     };
 
+
+    var lastUpdate = undefined;
     ws.onmessage = function (ev) {
         var parsed = JSON.parse(ev.data);
         var c = parsed['c'];
@@ -216,7 +218,8 @@ jQuery(document).ready(function () {
             logged = true;
         }
 
-        window.requestAnimationFrame(funcUpdate);
+        window.cancelAnimationFrame(lastUpdate);
+        lastUpdate = window.requestAnimationFrame(funcUpdate);
     };
 
     var width = map[0].width;
