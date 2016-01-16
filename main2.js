@@ -1,9 +1,9 @@
 jQuery(document).ready(function () {
 
 
-    var ws = new WebSocket("ws://" + window.location.hostname + ":8765/");
+    var ws = new WebSocket("ws://192.168.0.13:8765/");
 
-    var data = {}
+    var data = {};
 
     var out = jQuery('#output');
 
@@ -65,9 +65,9 @@ jQuery(document).ready(function () {
                 "sNumParticipants",
                 "sCurrentTime",
                 "sSplitTimeAhead",
-                "sSplitTimeBehind",
+                "sSplitTimeBehind"
             ]
-        }
+        };
         ws.send(JSON.stringify(msg));
     };
 
@@ -122,7 +122,7 @@ jQuery(document).ready(function () {
         sGear.html(c.sGear);
 
         // process data for the tyres
-        for (var idx = 0; idx <= 4; idx++) {
+        for (var idx = 0; idx < 4; idx++) {
 
             if (typeof tyreGripProbes[idx] === 'undefined') {
                 tyreGripProbes[idx] = [];
@@ -136,13 +136,13 @@ jQuery(document).ready(function () {
 
             var tyreGripAvg = 0;
             var tyreGripSum = 0;
-            for (var i in tyreGripProbes) {
+            for (var i = 0; i < tyreGripProbes.length; i++) {
                 tyreGripSum += tyreGripProbes[i];
             }
             tyreGripAvg = tyreGripSum / tyreGripProbes[idx].length;
 
-            jQuery('#sTyreTemp' + idx).html(c.sTyreTemp[idx]);
-            jQuery('#sTyreWear' + idx).html(c.sTyreWear[idx]);
+            jQuery('#sTyreTemp' + idx).html(c['sTyreTemp'][idx]);
+            jQuery('#sTyreWear' + idx).html(c['sTyreWear'][idx]);
             jQuery('#sTyreGrip' + idx).html(tyreGripAvg);
         }
 
@@ -179,11 +179,11 @@ jQuery(document).ready(function () {
         ctx.fillStyle = "red";
         ctx.strokeStyle = "red";
         draw(c.sParticipationInfo[0], 0);
-    }
+    };
 
     ws.onmessage = function (ev) {
         var parsed = JSON.parse(ev.data);
-        var c = parsed.c;
+        var c = parsed['c'];
         for (var key in c) {
             if (c.hasOwnProperty(key)) {
                 data[key] = c[key];

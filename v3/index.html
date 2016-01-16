@@ -116,7 +116,7 @@
             </div>
             <div class="row" style="height:130px">
                 <div class="col-md-6 col-xs-6">
-                	<div class="tile tile-21">lap<strong id="sCurrentTime">1:12,034</strong></div>
+                	<div class="tile tile-21">lap time<strong id="sCurrentTime">1:12,034</strong></div>
                 </div>
                 <div class="col-md-6 col-xs-6">
                     <div class="row">
@@ -140,7 +140,7 @@
         <div class="col-md-4">
             <div class="row" style="height:430px;">
                 <div class="col-md-12">
-                	<div class="tile tile-1"><canvas id="map"></canvas></div>
+                	<div class="tile tile-1"><canvas id="map" width="700" height="550"></canvas></div>
                 </div>
             </div>
             <div class="row" style="height:140px">
@@ -180,7 +180,6 @@
         $(".vswitch").click(function(){ $("div.hot").toggleClass("night"); });
         $(".rpmswitch").click(function(){ $(".rpm").addClass("fullscreen"); });
         $(".rpm strong").click(function(){ $(".rpm").removeClass("fullscreen"); });
-        $('#sTyreWear' + idx).css('height', c.sTyreWear[idx] / 2.55 + "%");
     </script>
 
 </body>
