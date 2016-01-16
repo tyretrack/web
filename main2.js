@@ -27,8 +27,10 @@ jQuery(document).ready(function () {
     var sSplitTimeBehind = jQuery('#sSplitTimeBehind');
     var sGear = jQuery('#sGear');
     var fuelPercent = jQuery('#fuelPercent');
-    var fuelLitres = jQuery('#fuelLitres')
+    var fuelLitres = jQuery('#fuelLitres');
     var rpmPercent = jQuery('.rpmPercent');
+
+    var sAmbientTemperature = jQuery('#sAmbientTemperature');
 
     var map = jQuery('#map');
     // x: -1700 - 4364
@@ -65,7 +67,8 @@ jQuery(document).ready(function () {
                 "sNumParticipants",
                 "sCurrentTime",
                 "sSplitTimeAhead",
-                "sSplitTimeBehind"
+                "sSplitTimeBehind",
+                "sAmbientTemperature"
             ]
         };
         ws.send(JSON.stringify(msg));
@@ -110,16 +113,16 @@ jQuery(document).ready(function () {
             fuelPercent.addClass(newFuelColor);
         }
 
-        fuelPercent.width(fuel + "%");
-        fuelLitres.html(Math.round((fuel / c.sFuelCapacity) * 100));
+        fuelLitres.html((c.sFuelLevel*100).toFixed(1) + " l");
         speed.html(Math.round((c.sSpeed * 60 * 60) / 1000));
         numParticipants.html(c.sNumParticipants);
 
-        sEventTimeRemaining.html(Math.round(c.sEventTimeRemaining / 60));
-        sCurrentTime.html(Math.round(c.sCurrentTime));
-        sSplitTimeAhead.html(Math.round(c.sSplitTimeAhead));
-        sSplitTimeBehind.html(Math.round(c.sSplitTimeBehind));
+        sEventTimeRemaining.html(Math.round(c.sEventTimeRemaining / 60) + " min");
+        sCurrentTime.html(c.sCurrentTime.toFixed(1));
+        sSplitTimeAhead.html(c.sSplitTimeAhead.toFixed(1));
+        sSplitTimeBehind.html(c.sSplitTimeBehind.toFixed(1));
         sGear.html(c.sGear);
+        sAmbientTemperature.html(c.sAmbientTemperature + " °C");
 
         // process data for the tyres
         for (var idx = 0; idx < 4; idx++) {
@@ -148,13 +151,12 @@ jQuery(document).ready(function () {
 
         // MAP
 
-        var ctx = map[0].getContext("2d", {alpha: false});
+        var ctx = map[0].getContext("2d", {alpha: true});
 
+        ctx.clearRect(0, 0, width, height);
+
+        ctx.strokeStyle = "black";
         ctx.fillStyle = "black";
-        ctx.fillRect(0, 0, width, height);
-
-        ctx.strokeStyle = "white";
-        ctx.fillStyle = "white";
         ctx.textAlign = "center";
         ctx.textBaseline = 'middle';
         ctx.font = "14px sans";
@@ -162,11 +164,22 @@ jQuery(document).ready(function () {
         function draw(info, idx) {
             var pos = info.sWorldPosition;
 
-            var x = (pos[0] + xModulator);
-            var y = (pos[2] + yModulator);
+            // x: -1700 - 4364
+            // 1800 - 4400
+            // y: 0 - 5372
+            // 0 - 5400
+
+            var x = (pos[0] + 1900) / 10.0;
+            var y = (pos[2] - 5500) / -10.0;
+
+            x *= 0.6025;
+            y *= 0.61;
+
+            x += 46;
+            y += 58;
 
             ctx.beginPath();
-            ctx.arc(x, y, 12, 0, 2 * Math.PI);
+            ctx.arc(x, y, 10, 0, 2 * Math.PI);
             ctx.stroke();
 
             ctx.fillText(idx, x, y);
@@ -198,9 +211,6 @@ jQuery(document).ready(function () {
         window.requestAnimationFrame(funcUpdate);
     };
 
-    var ctx = map[0].getContext("2d", {alpha: false});
     var width = map[0].width;
     var height = map[0].height;
-    ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, width, height);
 });

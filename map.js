@@ -66,7 +66,7 @@ jQuery(document).ready(function () {
         ctx.fillStyle = "red";
         ctx.strokeStyle = "red";
         draw(c.sParticipationInfo[0], 0);
-    }
+    };
 
     ws.onmessage = function (ev) {
 
