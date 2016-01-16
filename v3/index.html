@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+  
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>24h-of-pankow</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/user.css">
+    <link href='https://fonts.googleapis.com/css?family=Economica:400,700,700italic' rel='stylesheet' type='text/css'>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="lib/underscore.js"></script>
+    <script src="lib/backbone.js"></script>
+    <script data-main="main" src="lib/require.js"></script>
+</head>
+
+<body>
+    <div class="progress rpm">
+      <div class="rpmPercent progress-bar progress-bar-danger" role="progressbar" style="width:10%">
+        <span class="sr-only"></span><strong class="sRpm">7000</strong>
+      </div>
+    </div>
+    <div class="row hot">
+        <div class="vswitch">
+			<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 26" enable-background="new 0 0 24 26" xml:space="preserve">
+                <path d="M12.9,4c0.5,0,1-0.4,1-1V1c0-0.5-0.4-1-1-1c-0.5,0-1,0.4-1,1v2C11.9,3.5,12.4,4,12.9,4z M12.9,21.9c-0.5,0-1,0.4-1,1v2,c0,0.5,0.4,1,1,1c0.5,0,1-0.4,1-1v-2C13.9,22.3,13.5,21.9,12.9,21.9z M5.2,19.3l-1.4,1.4c-0.4,0.4-0.4,1,0,1.4,c0.4,0.4,1,0.4,1.4,0l1.4-1.4c0.4-0.4,0.4-1,0-1.4C6.2,18.9,5.6,18.9,5.2,19.3z M4,12.9c0-0.5-0.4-1-1-1H1c-0.5,0-1,0.4-1,1,c0,0.5,0.4,1,1,1h2C3.5,13.9,4,13.5,4,12.9z M5.2,6.6c0.4,0.4,1,0.4,1.4,0c0.4-0.4,0.4-1,0-1.4L5.2,3.8c-0.4-0.4-1-0.4-1.4,0,c-0.4,0.4-0.4,1,0,1.4L5.2,6.6z M16.9,6c-0.7,0-1.4,0.1-2,0.3c-0.6-0.2-1.3-0.3-2-0.3c-3.8,0-7,3.1-7,7s3.1,7,7,7,c0.7,0,1.4-0.1,2-0.3c0.6,0.2,1.3,0.3,2,0.3c3.8,0,7-3.1,7-7S20.8,6,16.9,6z M12,17.8c-2.3-0.5-4-2.5-4-4.9c0-2.4,1.7-4.4,4-4.9,c-1.2,1.3-2,3-2,4.9C10,14.8,10.7,16.6,12,17.8z"/>
+            </svg>
+        </div>
+        <div class="col-md-4 col-xs-12">
+            <div class="row " style="height:280px;">
+                <div class="col-md-8 col-xs-8">
+                    <div class="tile tile-8" ><strong id="sSpeed">100</strong>km/h</div>
+                </div>
+                <div class="col-md-4 col-xs-4">
+                    <div class="tile tile-4">
+                    	<div class="wheel"><span id="sTyreWear0" style="height:70%;">70</span></div>
+                        <div class="wheel"><span id="sTyreTemp1" style="height:40%;">89</span></div>
+                        <div class="wheel"><span id="sTyreTemp2" style="height:50%;">33</span></div>
+                        <div class="wheel"><span id="sTyreTemp3" style="height:80%;">43</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="height:130px">
+                <div class="col-md-4 col-xs-4 tswitch">
+                    <div class="tile tile-21" >
+						<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 31.8 48" enable-background="new 0 0 31.8 48" xml:space="preserve" width="20%">
+							<path d="M27.5,12.8c-0.6-0.6-1.7-0.6-2.4,0c-0.6,0.6-0.6,1.7,0,2.4l2.3,2.3C26,17.8,25,19.1,25,20.6c0,1.9,1.5,3.4,3.4,3.4,c0.6,0,1.1-0.1,1.6-0.4v13.1c0,1.6-1.3,2.8-2.8,2.8c-1.6,0-2.8-1.3-2.8-2.8l0,0v-8.9c0-2.5-2.1-4.6-4.6-4.6h-1v-12,c0-2.5-2.1-4.6-4.6-4.6H4.6C2.1,6.7,0,8.8,0,11.2v29.9h18.8V24.9h1c1.6,0,2.8,1.3,2.8,2.8v8.9l0,0c0,2.5,2.1,4.6,4.6,4.6,s4.6-2.1,4.6-4.6V17L27.5,12.8z M16.4,39H2.2V11.2l0,0c0-1.2,1.1-2.3,2.3-2.3h9.6l0,0c1.2,0,2.3,1.1,2.3,2.3L16.4,39L16.4,39z,M28.4,22c-0.8,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5s1.5,0.7,1.5,1.5C29.9,21.4,29.2,22,28.4,22z"/>
+							<path d="M7,27.2c1.3,1.3,3.5,1.3,4.8,0s1.3-3.5,0-4.8l-2.4-2.8L7,22.5l0,0C5.7,23.8,5.7,26,7,27.2z"/>
+                        </svg>
+						<strong id="sFuelLevel">50%</strong>
+                    </div>
+                    <div class="tile tile-21" >
+                    	<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 31.8 48" enable-background="new 0 0 31.8 48" xml:space="preserve" width="20%">
+							<path d="M27.5,12.8c-0.6-0.6-1.7-0.6-2.4,0c-0.6,0.6-0.6,1.7,0,2.4l2.3,2.3C26,17.8,25,19.1,25,20.6c0,1.9,1.5,3.4,3.4,3.4,c0.6,0,1.1-0.1,1.6-0.4v13.1c0,1.6-1.3,2.8-2.8,2.8c-1.6,0-2.8-1.3-2.8-2.8l0,0v-8.9c0-2.5-2.1-4.6-4.6-4.6h-1v-12,c0-2.5-2.1-4.6-4.6-4.6H4.6C2.1,6.7,0,8.8,0,11.2v29.9h18.8V24.9h1c1.6,0,2.8,1.3,2.8,2.8v8.9l0,0c0,2.5,2.1,4.6,4.6,4.6,s4.6-2.1,4.6-4.6V17L27.5,12.8z M16.4,39H2.2V11.2l0,0c0-1.2,1.1-2.3,2.3-2.3h9.6l0,0c1.2,0,2.3,1.1,2.3,2.3L16.4,39L16.4,39z,M28.4,22c-0.8,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5s1.5,0.7,1.5,1.5C29.9,21.4,29.2,22,28.4,22z"/>
+							<path d="M7,27.2c1.3,1.3,3.5,1.3,4.8,0s1.3-3.5,0-4.8l-2.4-2.8L7,22.5l0,0C5.7,23.8,5.7,26,7,27.2z"/>
+                        </svg>
+                        <strong id="fuelLitres">40L</strong>
+                    </div>
+                </div>
+                <div class="col-md-4 col-xs-4 tswitch">
+                    <div class="tile tile-21">RPM<strong class="sRpm">5000</strong></div>
+                    <div class="progress tile-35">
+                      <div class="rpmPercent progress-bar progress-bar-danger" role="progressbar" style="width: 10%">
+                        <span class="sr-only"></span>
+                      </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-xs-4">
+                    <div class="tile tile-24 rpmswitch"><strong id="sGear">5</strong></div>
+                </div>
+            </div>
+            <div class="row" style="height:60px">
+                <div class="col-md-2 col-xs-2">
+                    <div id="sStability" class="controls tile-26 status-on" ><strong>ESP</strong></div>
+                </div>
+                <div class="col-md-2 col-xs-2">
+                    <div id="sTractionControl" class="controls tile-26 status-off" ><strong>TCR</strong></div>
+                </div>
+                <div class="col-md-2 col-xs-2">
+                    <div id="sABS" class="controls tile-26 status-off" ><strong>ABS</strong></div>
+                </div>
+                <div class="col-md-2 col-xs-2">
+                    <div></div>
+                </div>
+                <div class="col-md-2 col-xs-2">
+                    <div class="controls tile-26" >
+						<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 26" enable-background="new 0 0 24 26" xml:space="preserve" width="70%" class="status-off">
+							<path d="M11.5,5.6c-0.1-0.1-0.3-0.2-0.4-0.2C6.6,5.5,1.8,8.6,1.8,13s4.8,7.5,9.4,7.6l0,0c0.2,0,0.3-0.1,0.4-0.2,c2.1-1.8,3.3-4.6,3.3-7.5S13.6,7.5,11.5,5.6z M11,19.5c-4-0.2-8.1-2.8-8.1-6.4C2.9,9.4,7,6.8,11,6.7c1.8,1.7,2.8,4,2.8,6.4,S12.7,17.8,11,19.5z"/>
+							<path d="M21.4,12.5h-5.3c-0.4,0-0.5,0.3-0.5,0.5c0,0.4,0.3,0.5,0.5,0.5h5.3c0.4,0,0.5-0.3,0.5-0.5C21.9,12.7,21.7,12.5,21.4,12.5z"/>
+							<path d="M15.3,9.2c0.1,0,0.1,0,0.2,0l4.9-1.8c0.3-0.1,0.4-0.4,0.4-0.7c-0.1-0.3-0.4-0.4-0.7-0.4l-4.9,1.8c-0.3,0.1-0.4,0.4-0.4,0.7,C14.9,9,15.1,9.2,15.3,9.2z"/>
+							<path d="M20.5,18.7l-4.9-1.8c-0.3-0.1-0.6,0.1-0.7,0.4c-0.1,0.3,0.1,0.6,0.4,0.7l4.9,1.8c0.1,0,0.1,0,0.2,0c0.3,0,0.4-0.2,0.5-0.4,C20.9,19.2,20.7,18.8,20.5,18.7z"/>
+						</svg>
+                    </div>
+                </div>
+                <div class="col-md-2 col-xs-2">
+                    <div class="controls tile-26" >
+						<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 26" enable-background="new 0 0 24 26" xml:space="preserve" width="70%" class="status-off">
+                            <path d="M19.8,17.4l-0.5-0.3C17,15.7,14.5,15,11.8,15c-2.6,0-5.1,0.7-7.5,2l-0.5,0.3L0,10.5l0.5-0.3,c3.4-2,7.4-3.1,11.5-3.1s8.1,1.1,11.6,3.2l0.5,0.3L19.8,17.4z M11.9,14c2.6,0,5.3,0.7,7.7,2l3-5.1C19.4,9.1,15.8,8,11.9,8,C8.1,8,4.4,9,1.3,10.8l3,5C6.8,14.7,9.4,14,11.9,14z"/>
+                            <path d="M19.8,17.4l-0.5-0.3C17,15.7,14.5,15,11.8,15c-2.6,0-5.1,0.7-7.5,2l-0.5,0.3L0,10.5l0.5-0.3,c3.4-2,7.4-3.1,11.5-3.1s8.1,1.1,11.6,3.2l0.5,0.3L19.8,17.4z M11.9,14c2.6,0,5.3,0.7,7.7,2l3-5.1C19.4,9.1,15.8,8,11.9,8,C8.1,8,4.4,9,1.3,10.8l3,5C6.8,14.7,9.4,14,11.9,14z"/>
+                            <path d="M9.7,16.6L9.7,16.6L6,9.8C6,9.6,5.7,9.5,5.4,9.6C5.1,9.7,5,10,5.2,10.3l3.6,6.8c-0.1,0.2-0.2,0.4-0.2,0.7,c0,0.7,0.5,1.1,1.1,1.1c0.7,0,1.1-0.5,1.1-1.1S10.3,16.6,9.7,16.6z"/>
+                            <path d="M14.3,16.6L14.3,16.6l-3.7-6.8c-0.1-0.3-0.5-0.4-0.7-0.2c-0.3,0.1-0.4,0.5-0.2,0.7l3.6,6.8,c-0.1,0.2-0.2,0.4-0.2,0.7c0,0.7,0.5,1.1,1.1,1.1s1.1-0.5,1.1-1.1S14.8,16.6,14.3,16.6z"/>
+                            <path d="M9.7,16.6L9.7,16.6L6,9.8C6,9.6,5.7,9.5,5.4,9.6C5.1,9.7,5,10,5.2,10.3l3.6,6.8c-0.1,0.2-0.2,0.4-0.2,0.7,c0,0.7,0.5,1.1,1.1,1.1c0.7,0,1.1-0.5,1.1-1.1S10.3,16.6,9.7,16.6z"/>
+                            <path d="M14.3,16.6L14.3,16.6l-3.7-6.8c-0.1-0.3-0.5-0.4-0.7-0.2c-0.3,0.1-0.4,0.5-0.2,0.7l3.6,6.8,c-0.1,0.2-0.2,0.4-0.2,0.7c0,0.7,0.5,1.1,1.1,1.1s1.1-0.5,1.1-1.1S14.8,16.6,14.3,16.6z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>            
+        </div>
+        <div class="col-md-4">
+            <div class="row" style="height:130px">
+                <div class="col-md-6 col-xs-6">
+                	<div class="tile tile-2"><strong id="place">12</strong>/<em id="sNumParticipants">32</em></div>
+                </div>
+                <div class="col-md-6 col-xs-6">
+                	<div class="tile tile-21">remaining<strong id="sEventTimeRemaining">7:41'12</strong></div>
+                </div>
+            </div>
+            <div class="row" style="height:130px">
+                <div class="col-md-6 col-xs-6">
+                	<div class="tile tile-21">lap<strong id="sCurrentTime">1:12,034</strong></div>
+                </div>
+                <div class="col-md-6 col-xs-6">
+                    <div class="row">
+                        <div class="col-md-6 col-xs-6">
+                            <div class="tile tile-21"><!--←--><div class="op-ahead"></div><strong id="sSplitTimeAhead">22</strong></div>
+                        </div>
+                        <div class="col-md-6 col-xs-6">
+                            <div class="tile tile-21"><!--→--><div class="op-ahead op-back"></div><strong id="sSplitTimeBehind">65</strong></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="height:130px">
+                <div class="col-md-6 col-xs-6">
+                </div>
+                <div class="col-md-6 col-xs-6">
+                	<div class="tile tile-21">best<strong>7:10,034</strong></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row" style="height:430px;">
+                <div class="col-md-12">
+                	<div class="tile tile-1"><canvas id="map"></canvas></div>
+                </div>
+            </div>
+            <div class="row" style="height:140px">
+                <div class="col-md-4 col-xs-4">
+                    <div class="tile tile-34t" >
+						<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 11 27.5" enable-background="new 0 0 11 27.5" xml:space="preserve" width="12%">
+                            <path d="M7.6,19.7c-0.3-0.3-0.5-0.7-0.5-1.1v-8.1H3.9v8.1c0,0.4-0.2,0.8-0.5,1.1c-0.7,0.6-1,1.4-1,2.3c0,1.7,1.4,3.1,3.1,3.1,s3.1-1.4,3.1-3.1C8.6,21.1,8.2,20.2,7.6,19.7z"/>
+                            <path d="M9.4,18.2V3.9C9.4,1.8,7.6,0,5.5,0C3.3,0,1.5,1.8,1.5,3.9v14.2c-1,1-1.5,2.4-1.5,3.8c0,3,2.5,5.5,5.5,5.5,c3,0,5.5-2.5,5.5-5.5C11,20.6,10.4,19.2,9.4,18.2z M7.7,4.1h-1c-0.3,0-0.5,0.2-0.5,0.5c0,0.3,0.2,0.5,0.5,0.5h1v1.1h-1,c-0.3,0-0.5,0.2-0.5,0.5s0.2,0.5,0.5,0.5h1v1.1h-1c-0.3,0-0.5,0.2-0.5,0.5c0,0.3,0.2,0.5,0.5,0.5h1v9.3c0,0.2,0.1,0.5,0.3,0.6,c0.8,0.7,1.3,1.7,1.3,2.8c0,2.1-1.7,3.8-3.8,3.8c-2.1,0-3.8-1.7-3.8-3.8c0-1.1,0.5-2.1,1.3-2.8c0.2-0.2,0.3-0.4,0.3-0.6V3.9,c0-1.2,1-2.2,2.2-2.2s2.2,1,2.2,2.2L7.7,4.1z"/>
+                        </svg>
+                        <strong>25°c</strong>
+                    </div>
+                </div>
+                <div class="col-md-4 col-xs-4">
+                    <div class="tile tile-34w">
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 15.4 9.7" enable-background="new 0 0 15.4 9.7" xml:space="preserve" width="60%">
+							<path d="M0,4c0-0.7,0.6-1.3,1.3-1.3C1.5,1.9,2.2,1.3,3,1.3c0.1,0,0.2,0,0.3,0C3.7,0.5,4.5,0,5.4,0c1,0,1.9,0.7,2.1,1.7,c0.4,0,0.8,0.2,1.1,0.4L8.3,2.5C8,2.3,7.7,2.2,7.4,2.2C7.2,2.2,7.1,2.1,7.1,2C7,1.1,6.3,0.5,5.4,0.5C4.6,0.5,4,1,3.8,1.7,c0,0.1-0.1,0.1-0.1,0.1c-0.1,0-0.1,0-0.2,0C3.3,1.8,3.2,1.8,3,1.8C2.4,1.8,1.8,2.3,1.7,3c0,0.1,0,0.1-0.1,0.2c-0.1,0-0.1,0.1-0.2,0,c0,0-0.1,0-0.1,0C0.9,3.2,0.5,3.5,0.5,4c0,0.5,0.4,0.8,0.8,0.8h3v0.5h-3C0.6,5.3,0,4.7,0,4z M12.9,9.7H4.7c-1,0-1.8-0.8-1.8-1.8,c0-1,0.8-1.8,1.7-1.8C4.9,4.9,5.8,4.2,7,4.2c0.1,0,0.3,0,0.4,0C7.9,3.1,9,2.4,10.1,2.4c1.4,0,2.6,1,3,2.3c1.3,0.1,2.3,1.2,2.3,2.5,C15.4,8.6,14.3,9.7,12.9,9.7z"/<name />
+						</svg>
+                    </div>
+                </div>
+                <div class="col-md-4 col-xs-4"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cold">
+    	<div>
+        	<h1>lap times</h1>
+            <p>01 - 7:45,02 - -1,283s</p>
+        </div>
+    </div>
+    
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../main2.js"></script>
+    <script>
+        $(".tswitch").click(function(){ $(this).toggleClass("leckmichdoch"); });
+        $(".vswitch").click(function(){ $("div.hot").toggleClass("night"); });
+        $(".rpmswitch").click(function(){ $(".rpm").addClass("fullscreen"); });
+        $(".rpm strong").click(function(){ $(".rpm").removeClass("fullscreen"); });
+        $('#sTyreWear' + idx).css('height', c.sTyreWear[idx] / 2.55 + "%");
+    </script>
+
+</body>
+</html>

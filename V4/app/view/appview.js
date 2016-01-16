@@ -1,28 +1,42 @@
 define(['../collection/connection'], function(Connection) {
     
+    var RenderOverwrite = {
+        // renders the controls elements diffrently
+        controls: function(el, value) {
+            var target = $(el);
+            if (value) {
+                target.removeClass("status-off");
+                target.addClass("status-on");
+            } else {
+                target.removeClass("status-on");
+                target.addClass("status-off");
+            }
+        }
+    }
+    
     return Backbone.View.extend({
-        
-        //el: document.getElementById("app"),
-        
-        //template: _.template(document.getElementById("tinterface-template")),
         
         connection: null,
         
-        // these will be updated in the DOM.
-        attrList: [
-            "sRpm",
-            "sSpeed",
-            "sGear",
-            "sEventTimeRemaining",
-            "sCurrentTime",
-            "sSplitTimeAhead",
-            "sSplitTimeBehind",
-            "sStability",
-            "sTractionControl",
-            "sABS",
-            "sFuelLevel",
-            "sTyreTemp"
-        ],
+        /** 
+         * These will be subscribed to.
+         * DOM elemnts with the ID of these key will get the value of them in their innerHTML
+         * You can override the default behavoir of rendering in innerHTML by adding an overwrite. 
+         */
+        attrList: {
+            sRpm: null,
+            sSpeed: null,
+            sGear: null,
+            sEventTimeRemaining: null,
+            sCurrentTime: null,
+            sSplitTimeAhead: null,
+            sSplitTimeBehind: null,
+            sStability: RenderOverwrite.controls,
+            sTractionControl: RenderOverwrite.controls,
+            sABS: RenderOverwrite.controls,
+            sFuelLevel: null,
+            sTyreTemp: null
+        },
         
         initialize: function() {
             
@@ -34,7 +48,7 @@ define(['../collection/connection'], function(Connection) {
             
             var msg = {
                 type: "subscribe",
-                data: this.attrList
+                data: _.keys(this.attrList)
             }
             
             this.connection.conn.send(JSON.stringify(msg));
@@ -47,26 +61,37 @@ define(['../collection/connection'], function(Connection) {
             
             for (var attr in this.attrList) {
                 
-                var value = player.get(this.attrList[attr]);
+                var value = player.get(attr);
                 if (typeof value == "object") { // data values that are grouped
                     for (var dataIdx in value) {
-                        var el = document.getElementById(this.attrList[attr] + dataIdx);
+                        var el = document.getElementById(attr + dataIdx);
                         
                         if (!el) {
                             continue;
                         }
-                        // for e.g sTyreTemp0 gets value of sTyreTemp array with index 0
-                        el.innerHTML = player.get(this.attrList[attr])[dataIdx];
+                        
+                        if (!this.attrList[attr]) {
+                            // for e.g sTyreTemp0 gets value of sTyreTemp array with index 0
+                            el.innerHTML = player.get(attr)[dataIdx];
+                        } else {
+                            this.attrList[attr](el, player.get(attr)[dataIdx])
+                        }
+                        
                     }
                 } else {
                     
-                    var el = document.getElementById(this.attrList[attr]);
+                    var el = document.getElementById(attr);
                         
                     if (!el) {
                         continue;
                     }
                         
-                    el.innerHTML = player.get(this.attrList[attr]);
+                    if (!this.attrList[attr]) {
+                        // for e.g sTyreTemp0 gets value of sTyreTemp array with index 0
+                        el.innerHTML = player.get(attr);
+                    } else {
+                        this.attrList[attr](el, player.get(attr))
+                    }
                 }
             }
             
