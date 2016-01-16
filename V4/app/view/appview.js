@@ -39,7 +39,7 @@ define(['../collection/connection'], function(Connection) {
             
             this.connection.conn.send(JSON.stringify(msg));
             
-            setTimeout(_.bind(this.render, this), 100);
+            setTimeout(_.bind(this.render, this), 60);
         },
         
         render: function() {
@@ -70,7 +70,7 @@ define(['../collection/connection'], function(Connection) {
                 }
             }
             
-            setTimeout(_.bind(this.render, this), 100);
+            setTimeout(_.bind(this.render, this), 60);
         },
     });
 });
