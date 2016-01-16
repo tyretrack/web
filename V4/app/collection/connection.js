@@ -9,7 +9,7 @@ define(['../model/player'], function(Player){
         
         initialize: function() {
             
-            this.conn = new WebSocket("ws://192.168.0.13:8765/");
+            this.conn = new WebSocket("ws://tyretrack.org:8765/");
             
             this.conn.onopen = _.bind(this.onOpen, this);
             this.conn.onmessage = _.bind(this.onMessage, this);

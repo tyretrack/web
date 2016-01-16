@@ -50,15 +50,6 @@ define([], function(){
             sGear: 0,
             sFuelLevel: 0,
             sParticipationInfo: [],
-            /*sTyreGrip: [
-                0, 0, 0, 0          // value for each tyre
-            ],
-            sTyreTemp: [
-                0, 0, 0, 0
-            ],
-            sTyreWear: [
-                0, 0, 0, 0
-            ],*/
             sEventTimeRemaining: 0, // event time remaining in seconds
             sNumParticipants: 0,
             sCurrentTime: 0, // in seconds
@@ -73,11 +64,6 @@ define([], function(){
             "sGear": [filters.gear],
             "sSplitTimeAhead": [filters.splitTime],
             "sSplitTimeBehind": [filters.splitTime]
-        },
-        
-        initialize: function() {
-            console.log(this);
-            //this.on("change", this.onChange)
         },
         
         parse: function(data) {
