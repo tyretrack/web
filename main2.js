@@ -74,6 +74,21 @@ jQuery(document).ready(function () {
         ws.send(JSON.stringify(msg));
     };
 
+    var prettyPrintSeconds = function (seconds, subseconds) {
+        if(subseconds !== "undefined")
+            seconds = seconds.toFixed(subseconds);
+        var hours = Math.floor(seconds / 3600);
+        seconds %= 3600;
+        var minutes = Math.floor(seconds / 60);
+        seconds %= 60;
+        if (hours > 0)
+            return hours + ":" + minutes + ":" + seconds;
+        else if (minutes > 0)
+            return minutes + ":" + seconds;
+        else
+            return "" + seconds;
+    };
+
     var funcUpdate = function () {
         var c = data;
 
@@ -113,17 +128,17 @@ jQuery(document).ready(function () {
             fuelPercent.addClass(newFuelColor);
         }
 
-        fuelLitres.html((c.sFuelLevel*100).toFixed(1) + " l");
+        fuelLitres.html((c.sFuelLevel * 100).toFixed(1) + " l");
         speed.html(Math.round((c.sSpeed * 60 * 60) / 1000));
         numParticipants.html(c.sNumParticipants);
 
-        sEventTimeRemaining.html(Math.round(c.sEventTimeRemaining / 60) + " min");
-        sCurrentTime.html(c.sCurrentTime.toFixed(1));
-        sSplitTimeAhead.html(c.sSplitTimeAhead.toFixed(1));
-        sSplitTimeBehind.html(c.sSplitTimeBehind.toFixed(1));
+        sEventTimeRemaining.html(prettyPrintSeconds(c.sEventTimeRemaining));
+        sCurrentTime.html(prettyPrintSeconds(c.sCurrentTime));
+        sSplitTimeAhead.html(prettyPrintSeconds(c.sSplitTimeAhead, 1));
+        sSplitTimeBehind.html(prettyPrintSeconds(c.sSplitTimeBehind, 1));
         sGear.html(c.sGear);
         sAmbientTemperature.html(c.sAmbientTemperature + " °C");
-        sCurrentLapDistance.html((c.sParticipationInfo[0]['sCurrentLapDistance'] / 1000).toFixed(2)  + " km");
+        sCurrentLapDistance.html((c.sParticipationInfo[0]['sCurrentLapDistance'] / 1000).toFixed(2) + " km");
 
         // process data for the tyres
         for (var idx = 0; idx < 4; idx++) {
