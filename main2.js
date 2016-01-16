@@ -30,6 +30,7 @@ jQuery(document).ready(function () {
     var rpmPercent = jQuery('.rpmPercent');
 
     var sAmbientTemperature = jQuery('#sAmbientTemperature');
+    var sCurrentLapDistance = jQuery('#sCurrentLapDistance');
 
     var map = jQuery('#map');
     // x: -1700 - 4364
@@ -67,7 +68,7 @@ jQuery(document).ready(function () {
                 "sCurrentTime",
                 "sSplitTimeAhead",
                 "sSplitTimeBehind",
-                "sAmbientTemperature"
+                "sAmbientTemperature",
             ]
         };
         ws.send(JSON.stringify(msg));
@@ -122,6 +123,7 @@ jQuery(document).ready(function () {
         sSplitTimeBehind.html(c.sSplitTimeBehind.toFixed(1));
         sGear.html(c.sGear);
         sAmbientTemperature.html(c.sAmbientTemperature + " °C");
+        sCurrentLapDistance.html((c.sParticipationInfo[0]['sCurrentLapDistance'] / 1000).toFixed(2)  + " km");
 
         // process data for the tyres
         for (var idx = 0; idx < 4; idx++) {
