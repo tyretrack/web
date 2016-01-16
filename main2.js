@@ -159,7 +159,7 @@ jQuery(document).ready(function () {
         ctx.fillStyle = "black";
         ctx.textAlign = "center";
         ctx.textBaseline = 'middle';
-        ctx.font = "14px sans";
+        ctx.font = "12px sans";
 
         function draw(info, idx) {
             var pos = info.sWorldPosition;
@@ -177,6 +177,13 @@ jQuery(document).ready(function () {
 
             x += 46;
             y += 58;
+
+            ctx.fillStyle = "white";
+            ctx.beginPath();
+            ctx.arc(x, y, 10, 0, 2 * Math.PI);
+            ctx.fill();
+
+            ctx.fillStyle = "black";
 
             ctx.beginPath();
             ctx.arc(x, y, 10, 0, 2 * Math.PI);
