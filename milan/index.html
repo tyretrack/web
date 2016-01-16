@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>24h-of-pankow</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/user.css">
+    <link href='https://fonts.googleapis.com/css?family=Economica:400,700,700italic' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+    <div class="row">
+        <div class="col-md-4 col-xs-12">
+            <div class="row" style="height:40%">
+                <div class="col-md-8 col-xs-8">
+                    <div class="tile tile-8" ><strong id="sSpeed"></strong>km/h</div>
+                </div>
+                <div class="col-md-4 col-xs-4">
+                    <div class="tile tile-4">
+                    	<div class="wheel"><span id="sTyreTemp0"></span>°C</div>
+                        <div class="wheel"><span id="sTyreTemp1"></span>°C</div>
+                        <div class="wheel"><span id="sTyreTemp2"></span>°C</div>
+                        <div class="wheel"><span id="sTyreTemp3"></span>°C</div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="row" style="height:20%">
+                <div class="col-md-4 col-xs-4">
+                    <div class="tile tile-34" ><img src="assets/img/fuel.svg" width="20%" /><strong id="sFuelLevel">%</strong></div>
+                </div>
+                <div class="col-md-4 col-xs-4">
+                    <div class="tile tile-34">RPM<strong id="sRpm"></strong></div>
+                </div>
+                <div class="col-md-4 col-xs-4">
+                    <div class="tile tile-34">UPM<strong></strong></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-6 col-xs-6"><img src="https://secure.gravatar.com/avatar/25ae9fd9001735d99662102f96245399/?s=80&amp;d=https%3A%2F%2Fthenounproject.com%2Fstatic%2Fimg%2Fdefault.jpg" width="100%"></div>
+                <div class="col-md-6 col-xs-6">
+                    <div class="row">
+                        <div class="col-md-6"></div>
+                        <div class="col-md-6"></div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6"></div>
+                        <div class="col-md-6"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-12"></div>
+                <div class="col-md-6"></div>
+                <div class="col-md-6"></div>
+            </div>
+        </div>
+    </div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../main.js"></script>
+</body>
+
+</html>
