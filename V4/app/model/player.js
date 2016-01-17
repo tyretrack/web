@@ -1,7 +1,7 @@
 define([], function(){
     
     var filters = {
-        round: function(value) {
+            round: function(value) {
                 return Math.round(value); 
             },
             speed: function (value) {
@@ -38,7 +38,7 @@ define([], function(){
                 return hours + ":" + minutes + ":" + sec
             },
             splitTime: function(value) {
-                return value == -1 ? "/" : value;
+                return value == -1 ? "/" : value.toFixed(2);
             }
     }
     
@@ -64,6 +64,10 @@ define([], function(){
             "sGear": [filters.gear],
             "sSplitTimeAhead": [filters.splitTime],
             "sSplitTimeBehind": [filters.splitTime]
+        },
+        
+        initialize: function() {
+            console.log(this);
         },
         
         parse: function(data) {
