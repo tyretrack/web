@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", function () {
          rpmPercent.addClass(newRpmColor);
          }*/
 
-        var fuel = Math.round(c.sFuelLevel * 100);
+        var fuel = Math.round(c.sFuelCapacity * c.sFuelLevel );
         fuelLevel.textContent = fuel + "%";
 
         var newFuelColor = "progress-bar-success";
@@ -231,7 +231,7 @@ document.addEventListener("DOMContentLoaded", function () {
          fuelPercent.addClass(newFuelColor);
          }*/
 
-        fuelLitres.textContent = (c.sFuelLevel * 100).toFixed(1) + " l";
+        fuelLitres.textContent = (c.sFuelCapacity * c.sFuelLevel).toFixed(1) + " l";
         speed.textContent = Math.round((c.sSpeed * 60 * 60) / 1000);
         numParticipants.textContent = c.sNumParticipants;
 
