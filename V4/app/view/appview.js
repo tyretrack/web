@@ -2,7 +2,7 @@ define(['../collection/connection'], function(Connection) {
     
     var RenderOverwrite = {
         // renders the controls elements diffrently
-        controls: function(el, value) {
+        controls: function(el, value, player, idx) {
             var target = $(el);
             if (value) {
                 target.removeClass("status-off");
@@ -11,6 +11,21 @@ define(['../collection/connection'], function(Connection) {
                 target.removeClass("status-on");
                 target.addClass("status-off");
             }
+        },
+        
+        tyre: function(el, value, player, idx) {
+            var target = $(el);
+            target.html(value);
+            target.height(player.get("sTyreWear")[idx] + "%");
+        },
+        
+        fuel: function(el, value, player) {
+            el.innerHTML = (player.get("sFuelLevel") * player.get("sFuelCapacity")).toFixed(2) + "l"
+        },
+        
+        position: function(el, value, player) {
+            console.log(player.get("sParticipationInfo")[0].sRacePosition);
+            el.innerHTML = player.get("sParticipationInfo")[0].sRacePosition;
         }
     }
     
@@ -34,8 +49,10 @@ define(['../collection/connection'], function(Connection) {
             sStability: RenderOverwrite.controls,
             sTractionControl: RenderOverwrite.controls,
             sABS: RenderOverwrite.controls,
-            sFuelLevel: null,
-            sTyreTemp: null
+            sFuelLevel:RenderOverwrite.fuel,
+            sTyreTemp: RenderOverwrite.tyre,
+            sTyreWear: null,
+            sParticipationInfo: RenderOverwrite.position
         },
         
         initialize: function() {
@@ -53,7 +70,7 @@ define(['../collection/connection'], function(Connection) {
             
             this.connection.conn.send(JSON.stringify(msg));
             
-            setTimeout(_.bind(this.render, this), 60);
+            setTimeout(_.bind(this.render, this), 80);
         },
         
         render: function() {
@@ -74,7 +91,7 @@ define(['../collection/connection'], function(Connection) {
                             // for e.g sTyreTemp0 gets value of sTyreTemp array with index 0
                             el.innerHTML = player.get(attr)[dataIdx];
                         } else {
-                            this.attrList[attr](el, player.get(attr)[dataIdx])
+                            this.attrList[attr](el, player.get(attr)[dataIdx], player, dataIdx)
                         }
                         
                     }
@@ -90,12 +107,12 @@ define(['../collection/connection'], function(Connection) {
                         // for e.g sTyreTemp0 gets value of sTyreTemp array with index 0
                         el.innerHTML = player.get(attr);
                     } else {
-                        this.attrList[attr](el, player.get(attr))
+                        this.attrList[attr](el, player.get(attr), player, null)
                     }
                 }
             }
             
-            setTimeout(_.bind(this.render, this), 60);
+            setTimeout(_.bind(this.render, this), 80);
         },
     });
 });
