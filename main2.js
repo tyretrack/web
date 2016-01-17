@@ -51,28 +51,6 @@ jQuery(document).ready(function () {
     var tyreGripProbes = [];
 
     var logged = false;
-    ws.onopen = function (event) {
-        out.text("connected");
-        var msg = {
-            type: "subscribe",
-            data: ["sRpm",
-                "sSpeed",
-                "sGear",
-                "sFuelLevel",
-                "sParticipationInfo",
-                "sTyreGrip",
-                "sTyreTemp",
-                "sTyreWear",
-                "sEventTimeRemaining",
-                "sNumParticipants",
-                "sCurrentTime",
-                "sSplitTimeAhead",
-                "sSplitTimeBehind",
-                "sAmbientTemperature",
-            ]
-        };
-        ws.send(JSON.stringify(msg));
-    };
 
     var prettyPrintSeconds = function (seconds, subseconds) {
         if(subseconds !== "undefined")
@@ -219,24 +197,67 @@ jQuery(document).ready(function () {
 
 
     var lastUpdate = undefined;
-    ws.onmessage = function (ev) {
-        var parsed = JSON.parse(ev.data);
-        var c = parsed['c'];
-        for (var key in c) {
-            if (c.hasOwnProperty(key)) {
-                data[key] = c[key];
+
+    var funcConnect = function () {
+        ws = new WebSocket("ws://" + window.location.hostname + ":8765/");
+
+        ws.onmessage = function (ev) {
+            var parsed = JSON.parse(ev.data);
+            var c = parsed['c'];
+            for (var key in c) {
+                if (c.hasOwnProperty(key)) {
+                    data[key] = c[key];
+                }
             }
-        }
 
-        if (!logged) {
-            console.log(c);
-            logged = true;
-        }
+            if (!logged) {
+                console.log(c);
+                logged = true;
+            }
 
-        window.cancelAnimationFrame(lastUpdate);
-        lastUpdate = window.requestAnimationFrame(funcUpdate);
+            window.cancelAnimationFrame(lastUpdate);
+            lastUpdate = window.requestAnimationFrame(funcUpdate);
+        };
+
+        ws.onclose = function () {
+            console.log("disconnected");
+        };
+
+        ws.onopen = function (event) {
+            console.log("connected");
+            var msg = {
+                type: "subscribe",
+                data: ["sRpm",
+                    "sSpeed",
+                    "sGear",
+                    "sFuelLevel",
+                    "sParticipationInfo",
+                    "sTyreGrip",
+                    "sTyreTemp",
+                    "sTyreWear",
+                    "sEventTimeRemaining",
+                    "sNumParticipants",
+                    "sCurrentTime",
+                    "sSplitTimeAhead",
+                    "sSplitTimeBehind",
+                    "sAmbientTemperature",
+                ]
+            };
+            ws.send(JSON.stringify(msg));
+        };
     };
+;
 
     var width = map[0].width;
     var height = map[0].height;
+
+    document.addEventListener("visibilitychange", function (ev) {
+        /* TODO if(document.visibilityState === "hidden") {
+            ws.close();
+        } else {
+            funcConnect();
+        }*/
+    });
+
+    funcConnect();
 });
