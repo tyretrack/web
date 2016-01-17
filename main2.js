@@ -236,7 +236,7 @@ document.addEventListener("DOMContentLoaded", function () {
         numParticipants.textContent = c.sNumParticipants;
 
         sEventTimeRemaining.textContent = prettyPrintSeconds(c.sEventTimeRemaining);
-        sCurrentTime.textContent = prettyPrintSeconds(c.sCurrentTime, 3);
+        sCurrentTime.textContent = prettyPrintSeconds(c.sCurrentTime, 1 );
         sSplitTimeAhead.textContent = prettyPrintSeconds(c.sSplitTimeAhead, 1);
         sSplitTimeBehind.textContent = prettyPrintSeconds(c.sSplitTimeBehind, 1);
         sGear.textContent = c.sGear;
