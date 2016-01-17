@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function findName(dist) {
         var i;
-        for(i = 0; i < dists.length && dists[i] < dist; i++) {
+        for (i = 0; i < dists.length && dists[i] < dist; i++) {
         }
 
         return names[--i];
@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", function () {
         draw(c.sParticipationInfo[0], 0);
     }
 
-     function funcUpdate() {
+    function funcUpdate() {
         var i;
         var c = data;
 
@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", function () {
          rpmPercent.addClass(newRpmColor);
          }*/
 
-        var fuel = Math.round(c.sFuelCapacity * c.sFuelLevel );
+        var fuel = Math.round(c.sFuelCapacity * c.sFuelLevel);
         fuelLevel.textContent = fuel + "%";
 
         var newFuelColor = "progress-bar-success";
@@ -265,7 +265,7 @@ document.addEventListener("DOMContentLoaded", function () {
             tyreGripAvg = tyreGripSum / tyreGripProbes[idx].length;
 
             sTyreTemp[idx].textContent = c['sTyreTemp'][idx];
-            //jQuery('#sTyreWear' + idx).html(c['sTyreWear'][idx]);
+            sTyreTemp[idx].style.backgroundSize = "100% " + (c['sTyreWear'][idx] / 255 * 100).toFixed() + "%";
             //jQuery('#sTyreGrip' + idx).html(tyreGripAvg);
         }
 
@@ -275,6 +275,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var lastUpdate = undefined;
     var logged = false;
+
     function funcConnect() {
         ws = new WebSocket("ws://" + window.location.hostname + ":8765/");
 
