@@ -32,10 +32,10 @@
                 </div>
                 <div class="col-md-4 col-xs-4">
                     <div class="tile tile-4">
-                    	<div class="wheel"><span id="sTyreTemp0" style="height:70%;">70</span></div>
-                        <div class="wheel"><span id="sTyreTemp1" style="height:40%;">89</span></div>
-                        <div class="wheel"><span id="sTyreTemp2" style="height:50%;">33</span></div>
-                        <div class="wheel"><span id="sTyreTemp3" style="height:80%;">43</span></div>
+                    	<div class="wheel"><span class="sTyreTemp" style="height:70%;">70</span></div>
+                        <div class="wheel"><span class="sTyreTemp" style="height:40%;">89</span></div>
+                        <div class="wheel"><span class="sTyreTemp" style="height:50%;">33</span></div>
+                        <div class="wheel"><span class="sTyreTemp" style="height:80%;">43</span></div>
                     </div>
                 </div>
             </div>
@@ -262,16 +262,7 @@
             <p>01 - 7:45,02 - -1,283s</p>
         </div>
     </div>
-    
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-	<script src="main2.js"></script>
-    <script>
-        $(".tswitch").click(function(){ $(this).toggleClass("leckmichdoch"); });
-        $(".vswitch").click(function(){ $("div.hot").toggleClass("night"); });
-        $(".rpmswitch").click(function(){ $(".rpm").addClass("fullscreen"); });
-        $(".rpm strong").click(function(){ $(".rpm").removeClass("fullscreen"); });
-    </script>
 
+	<script src="main2.js"></script>
 </body>
 </html>

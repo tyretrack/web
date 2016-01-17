@@ -1,46 +1,48 @@
-jQuery(document).ready(function () {
+document.addEventListener("DOMContentLoaded", function () {
 
-    var ws = new WebSocket("ws://" + window.location.hostname + ":8765/");
+    var ws;
 
     var data = {};
 
-    var out = jQuery('#output');
+    var out = document.getElementById('output');
 
-    var place = jQuery('#place');
-    var lap = jQuery('#lap');
+    var place = document.getElementById('place');
+    var lap = document.getElementById('lap');
 
-    var rpm = jQuery('.sRpm');
+    var rpm = document.getElementsByClassName('sRpm');
+    var rpmPercent = document.getElementsByClassName('rpmPercent');
 
-    var fuel = jQuery('#fuel');
-    var fuelLevel = jQuery('#sFuelLevel');
-    var speed = jQuery('#sSpeed');
+    var fuel = document.getElementById('fuel');
+    var fuelLevel = document.getElementById('sFuelLevel');
+    var speed = document.getElementById('sSpeed');
 
-    var abs = jQuery('#sABS');
-    var tractionControl = jQuery('#sTractionControl');
-    var stability = jQuery('#sStability');
+    var abs = document.getElementById('sABS');
+    var tractionControl = document.getElementById('sTractionControl');
+    var stability = document.getElementById('sStability');
 
-    var numParticipants = jQuery('#sNumParticipants');
-    var sEventTimeRemaining = jQuery('#sEventTimeRemaining');
-    var sCurrentTime = jQuery('#sCurrentTime');
-    var sSplitTimeAhead = jQuery('#sSplitTimeAhead');
-    var sSplitTimeBehind = jQuery('#sSplitTimeBehind');
-    var sGear = jQuery('#sGear');
-    var fuelPercent = jQuery('#fuelPercent');
-    var fuelLitres = jQuery('#fuelLitres');
-    var rpmPercent = jQuery('.rpmPercent');
+    var numParticipants = document.getElementById('sNumParticipants');
+    var sEventTimeRemaining = document.getElementById('sEventTimeRemaining');
+    var sCurrentTime = document.getElementById('sCurrentTime');
+    var sSplitTimeAhead = document.getElementById('sSplitTimeAhead');
+    var sSplitTimeBehind = document.getElementById('sSplitTimeBehind');
+    var sGear = document.getElementById('sGear');
+    var fuelPercent = document.getElementById('fuelPercent');
+    var fuelLitres = document.getElementById('fuelLitres');
 
-    var sAmbientTemperature = jQuery('#sAmbientTemperature');
-    var sCurrentLapDistance = jQuery('#sCurrentLapDistance');
+    var sAmbientTemperature = document.getElementById('sAmbientTemperature');
+    var sCurrentLapDistance = document.getElementById('sCurrentLapDistance');
 
-    var map = jQuery('#map');
+    var map = document.getElementById('map');
+
+    var sTyreTemp = document.getElementsByClassName('sTyreTemp');
     // x: -1700 - 4364
     // 1800 - 4400
     // y: 0 - 5372
     // 0 - 5400
     var maxX = 1800, maxY = 0, minX = -1700, minY = 5400;
 
-    var mapWidth = map[0].width;
-    var mapHeight = map[0].height;
+    var mapWidth = map.width;
+    var mapHeight = map.height;
 
     var xModulator = ((maxX - minX) + mapWidth / 2);
     var yModulator = ((maxY - minY) + mapHeight / 2);
@@ -50,15 +52,13 @@ jQuery(document).ready(function () {
 
     var tyreGripProbes = [];
 
-    var logged = false;
-
     var prettyPrintSeconds = function (seconds, subseconds) {
-        if(subseconds !== "undefined")
-            seconds = seconds.toFixed(subseconds);
         var hours = Math.floor(seconds / 3600);
         seconds %= 3600;
         var minutes = Math.floor(seconds / 60);
         seconds %= 60;
+        if(subseconds !== "undefined")
+            seconds = seconds.toFixed(subseconds);
         if (hours > 0)
             return hours + ":" + minutes + ":" + seconds;
         else if (minutes > 0)
@@ -67,87 +67,10 @@ jQuery(document).ready(function () {
             return "" + seconds;
     };
 
-    var funcUpdate = function () {
-        var c = data;
+    var drawMap = function (c) {
+        var ctx = map.getContext("2d", {alpha: true});
 
-        place.html(c.sParticipationInfo[0].sRacePosition);
-        lap.html(c.sParticipationInfo[0].sCurrentLap);
-
-        rpm.html(c.sRpm);
-        var rpmPercentValue = ((c.sRpm / c.sMaxRpm) * 100);
-        rpmPercent.width(rpmPercentValue + "%");
-
-        var newRpmColor = "progress-bar-success";
-        if (rpmPercentValue > 90) {
-            newRpmColor = "progress-bar-danger";
-        } else if (rpmPercentValue > 70) {
-            newRpmColor = "progress-bar-warning";
-        }
-
-        if (newRpmColor != currRpmColor) {
-            rpmPercent.removeClass("progress-bar-success");
-            rpmPercent.removeClass("progress-bar-warning");
-            rpmPercent.removeClass("progress-bar-danger");
-            rpmPercent.addClass(newRpmColor);
-        }
-
-        var fuel = Math.round(c.sFuelLevel * 100);
-        fuelLevel.html(fuel + "%");
-
-        var newFuelColor = "progress-bar-success";
-        if (fuel < 10) {
-            newFuelColor = "progress-bar-danger";
-        }
-
-        if (newFuelColor != currFuelColor) {
-            fuelPercent.removeClass("progress-bar-success");
-            fuelPercent.removeClass("progress-bar-warning");
-            fuelPercent.removeClass("progress-bar-danger");
-            fuelPercent.addClass(newFuelColor);
-        }
-
-        fuelLitres.html((c.sFuelLevel * 100).toFixed(1) + " l");
-        speed.html(Math.round((c.sSpeed * 60 * 60) / 1000));
-        numParticipants.html(c.sNumParticipants);
-
-        sEventTimeRemaining.html(prettyPrintSeconds(c.sEventTimeRemaining));
-        sCurrentTime.html(prettyPrintSeconds(c.sCurrentTime));
-        sSplitTimeAhead.html(prettyPrintSeconds(c.sSplitTimeAhead, 1));
-        sSplitTimeBehind.html(prettyPrintSeconds(c.sSplitTimeBehind, 1));
-        sGear.html(c.sGear);
-        sAmbientTemperature.html(c.sAmbientTemperature + " °C");
-        sCurrentLapDistance.html((c.sParticipationInfo[0]['sCurrentLapDistance'] / 1000).toFixed(2) + " km");
-
-        // process data for the tyres
-        for (var idx = 0; idx < 4; idx++) {
-
-            if (typeof tyreGripProbes[idx] === 'undefined') {
-                tyreGripProbes[idx] = [];
-            }
-
-            if (tyreGripProbes[idx].length >= 200) {
-                tyreGripProbes.pop();
-            }
-
-            tyreGripProbes[idx].shift(c.sTyreGrip[idx]);
-
-            var tyreGripAvg = 0;
-            var tyreGripSum = 0;
-            for (var i = 0; i < tyreGripProbes.length; i++) {
-                tyreGripSum += tyreGripProbes[i];
-            }
-            tyreGripAvg = tyreGripSum / tyreGripProbes[idx].length;
-
-            jQuery('#sTyreTemp' + idx).html(c['sTyreTemp'][idx]);
-            jQuery('#sTyreWear' + idx).html(c['sTyreWear'][idx]);
-            jQuery('#sTyreGrip' + idx).html(tyreGripAvg);
-        }
-
-        // MAP
-
-        var ctx = map[0].getContext("2d", {alpha: true});
-
-        ctx.clearRect(0, 0, width, height);
+        ctx.clearRect(0, 0, mapWidth, mapHeight);
 
         ctx.strokeStyle = "black";
         ctx.fillStyle = "black";
@@ -195,9 +118,91 @@ jQuery(document).ready(function () {
         draw(c.sParticipationInfo[0], 0);
     };
 
+    var funcUpdate = function () {
+        var i;
+        var c = data;
+
+        place.textContent = c.sParticipationInfo[0].sRacePosition;
+        //lap[0].textContent = c.sParticipationInfo[0].sCurrentLap;
+
+        for(i = 0; i < rpm.length; i++) {
+            rpm[i].textContent = c.sRpm;
+        }
+        /*var rpmPercentValue = ((c.sRpm / c.sMaxRpm) * 100);
+        rpmPercent.width(rpmPercentValue + "%");
+
+        var newRpmColor = "progress-bar-success";
+        if (rpmPercentValue > 90) {
+            newRpmColor = "progress-bar-danger";
+        } else if (rpmPercentValue > 70) {
+            newRpmColor = "progress-bar-warning";
+        }*/
+
+        /*if (newRpmColor != currRpmColor) {
+            rpmPercent.removeClass("progress-bar-success");
+            rpmPercent.removeClass("progress-bar-warning");
+            rpmPercent.removeClass("progress-bar-danger");
+            rpmPercent.addClass(newRpmColor);
+        }*/
+
+        var fuel = Math.round(c.sFuelLevel * 100);
+        fuelLevel.textContent = fuel + "%";
+
+        var newFuelColor = "progress-bar-success";
+        if (fuel < 10) {
+            newFuelColor = "progress-bar-danger";
+        }
+
+        /*if (newFuelColor != currFuelColor) {
+            fuelPercent.removeClass("progress-bar-success");
+            fuelPercent.removeClass("progress-bar-warning");
+            fuelPercent.removeClass("progress-bar-danger");
+            fuelPercent.addClass(newFuelColor);
+        }*/
+
+        fuelLitres.textContent = (c.sFuelLevel * 100).toFixed(1) + " l";
+        speed.textContent = Math.round((c.sSpeed * 60 * 60) / 1000);
+        numParticipants.textContent = c.sNumParticipants;
+
+        sEventTimeRemaining.textContent = prettyPrintSeconds(c.sEventTimeRemaining);
+        sCurrentTime.textContent = prettyPrintSeconds(c.sCurrentTime, 3);
+        sSplitTimeAhead.textContent = prettyPrintSeconds(c.sSplitTimeAhead, 1);
+        sSplitTimeBehind.textContent = prettyPrintSeconds(c.sSplitTimeBehind, 1);
+        sGear.textContent = c.sGear;
+        sAmbientTemperature.textContent = c.sAmbientTemperature + " °C";
+        sCurrentLapDistance.textContent = (c.sParticipationInfo[0]['sCurrentLapDistance'] / 1000).toFixed(2) + " km";
+
+        // process data for the tyres
+        for (var idx = 0; idx < 4; idx++) {
+
+            if (typeof tyreGripProbes[idx] === 'undefined') {
+                tyreGripProbes[idx] = [];
+            }
+
+            if (tyreGripProbes[idx].length >= 200) {
+                tyreGripProbes.pop();
+            }
+
+            tyreGripProbes[idx].shift(c.sTyreGrip[idx]);
+
+            var tyreGripAvg = 0;
+            var tyreGripSum = 0;
+            for (i = 0; i < tyreGripProbes.length; i++) {
+                tyreGripSum += tyreGripProbes[i];
+            }
+            tyreGripAvg = tyreGripSum / tyreGripProbes[idx].length;
+
+            sTyreTemp[idx].textContent = c['sTyreTemp'][idx];
+            //jQuery('#sTyreWear' + idx).html(c['sTyreWear'][idx]);
+            //jQuery('#sTyreGrip' + idx).html(tyreGripAvg);
+        }
+
+        drawMap(c);
+    };
+
 
     var lastUpdate = undefined;
-
+    var logged = false;
     var funcConnect = function () {
         ws = new WebSocket("ws://" + window.location.hostname + ":8765/");
 
@@ -246,17 +251,15 @@ jQuery(document).ready(function () {
             ws.send(JSON.stringify(msg));
         };
     };
-;
-
-    var width = map[0].width;
-    var height = map[0].height;
 
     document.addEventListener("visibilitychange", function (ev) {
-        /* TODO if(document.visibilityState === "hidden") {
+        if(document['hidden']) {
             ws.close();
+            document.title = "24h-of-pankow (paused)"
         } else {
             funcConnect();
-        }*/
+            document.title = "24h-of-pankow"
+        }
     });
 
     funcConnect();
