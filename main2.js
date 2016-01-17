@@ -31,6 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var sAmbientTemperature = document.getElementById('sAmbientTemperature');
     var sCurrentLapDistance = document.getElementById('sCurrentLapDistance');
+    var sectorName = document.getElementById('sectorName');
 
     var map = document.getElementById('map');
 
@@ -52,12 +53,82 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var tyreGripProbes = [];
 
-    var prettyPrintSeconds = function (seconds, subseconds) {
+    var dists = [
+        0,
+        1560,
+        1900,
+        2110,
+        3280,
+        3650,
+        3940,
+        4880,
+        5450,
+        6240,
+        7100,
+        7550,
+        8340,
+        9460,
+        10570,
+        11700,
+        12330,
+        13100,
+        13540,
+        13800,
+        14010,
+        14750,
+        15420,
+        16450,
+        17010,
+        17520,
+        19140,
+        19900,
+        20250
+    ];
+
+    var names = ["Hatzenbach",
+        "Hoheneichen",
+        "Quidellbacher Höhe",
+        "Flugplatz",
+        "Schwedenkreuz",
+        "Aremberg",
+        "Fuchsröhre",
+        "Adenauer Forst",
+        "Metzgesfeld",
+        "Kallenhard",
+        "Wehrseifen",
+        "ExMühle",
+        "Bergwerk",
+        "Kesselchen",
+        "Klostertal",
+        "Karussel",
+        "Hohe Acht",
+        "Hedwigshöhe",
+        "Wipperman",
+        "Eschbach",
+        "Brünnchen",
+        "Pflanzgarten",
+        "Plfanzgarten II",
+        "Schwalbenschwanz",
+        "Galgenkopf",
+        "Döttinger Höhe",
+        "Antoniusbuche",
+        "Tiergarten",
+        "Hohenrain"];
+
+    function findName(dist) {
+        var i;
+        for(i = 0; i < dists.length && dists[i] < dist; i++) {
+        }
+
+        return names[--i];
+    }
+
+    function prettyPrintSeconds(seconds, subseconds) {
         var hours = Math.floor(seconds / 3600);
         seconds %= 3600;
         var minutes = Math.floor(seconds / 60);
         seconds %= 60;
-        if(subseconds !== "undefined")
+        if (subseconds !== "undefined")
             seconds = seconds.toFixed(subseconds);
         if (hours > 0)
             return hours + ":" + minutes + ":" + seconds;
@@ -65,9 +136,9 @@ document.addEventListener("DOMContentLoaded", function () {
             return minutes + ":" + seconds;
         else
             return "" + seconds;
-    };
+    }
 
-    var drawMap = function (c) {
+    function drawMap(c) {
         var ctx = map.getContext("2d", {alpha: true});
 
         ctx.clearRect(0, 0, mapWidth, mapHeight);
@@ -116,34 +187,34 @@ document.addEventListener("DOMContentLoaded", function () {
         ctx.fillStyle = "red";
         ctx.strokeStyle = "red";
         draw(c.sParticipationInfo[0], 0);
-    };
+    }
 
-    var funcUpdate = function () {
+     function funcUpdate() {
         var i;
         var c = data;
 
         place.textContent = c.sParticipationInfo[0].sRacePosition;
         //lap[0].textContent = c.sParticipationInfo[0].sCurrentLap;
 
-        for(i = 0; i < rpm.length; i++) {
+        for (i = 0; i < rpm.length; i++) {
             rpm[i].textContent = c.sRpm;
         }
         /*var rpmPercentValue = ((c.sRpm / c.sMaxRpm) * 100);
-        rpmPercent.width(rpmPercentValue + "%");
+         rpmPercent.width(rpmPercentValue + "%");
 
-        var newRpmColor = "progress-bar-success";
-        if (rpmPercentValue > 90) {
-            newRpmColor = "progress-bar-danger";
-        } else if (rpmPercentValue > 70) {
-            newRpmColor = "progress-bar-warning";
-        }*/
+         var newRpmColor = "progress-bar-success";
+         if (rpmPercentValue > 90) {
+         newRpmColor = "progress-bar-danger";
+         } else if (rpmPercentValue > 70) {
+         newRpmColor = "progress-bar-warning";
+         }*/
 
         /*if (newRpmColor != currRpmColor) {
-            rpmPercent.removeClass("progress-bar-success");
-            rpmPercent.removeClass("progress-bar-warning");
-            rpmPercent.removeClass("progress-bar-danger");
-            rpmPercent.addClass(newRpmColor);
-        }*/
+         rpmPercent.removeClass("progress-bar-success");
+         rpmPercent.removeClass("progress-bar-warning");
+         rpmPercent.removeClass("progress-bar-danger");
+         rpmPercent.addClass(newRpmColor);
+         }*/
 
         var fuel = Math.round(c.sFuelLevel * 100);
         fuelLevel.textContent = fuel + "%";
@@ -154,11 +225,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         /*if (newFuelColor != currFuelColor) {
-            fuelPercent.removeClass("progress-bar-success");
-            fuelPercent.removeClass("progress-bar-warning");
-            fuelPercent.removeClass("progress-bar-danger");
-            fuelPercent.addClass(newFuelColor);
-        }*/
+         fuelPercent.removeClass("progress-bar-success");
+         fuelPercent.removeClass("progress-bar-warning");
+         fuelPercent.removeClass("progress-bar-danger");
+         fuelPercent.addClass(newFuelColor);
+         }*/
 
         fuelLitres.textContent = (c.sFuelLevel * 100).toFixed(1) + " l";
         speed.textContent = Math.round((c.sSpeed * 60 * 60) / 1000);
@@ -171,6 +242,7 @@ document.addEventListener("DOMContentLoaded", function () {
         sGear.textContent = c.sGear;
         sAmbientTemperature.textContent = c.sAmbientTemperature + " °C";
         sCurrentLapDistance.textContent = (c.sParticipationInfo[0]['sCurrentLapDistance'] / 1000).toFixed(2) + " km";
+        sectorName.textContent = findName(c.sParticipationInfo[0]['sCurrentLapDistance']);
 
         // process data for the tyres
         for (var idx = 0; idx < 4; idx++) {
@@ -198,12 +270,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         drawMap(c);
-    };
+    }
 
 
     var lastUpdate = undefined;
     var logged = false;
-    var funcConnect = function () {
+    function funcConnect() {
         ws = new WebSocket("ws://" + window.location.hostname + ":8765/");
 
         ws.onmessage = function (ev) {
@@ -250,10 +322,10 @@ document.addEventListener("DOMContentLoaded", function () {
             };
             ws.send(JSON.stringify(msg));
         };
-    };
+    }
 
     document.addEventListener("visibilitychange", function (ev) {
-        if(document['hidden']) {
+        if (document['hidden']) {
             ws.close();
             document.title = "24h-of-pankow (paused)"
         } else {
